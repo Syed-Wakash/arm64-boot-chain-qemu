@@ -1,0 +1,26 @@
+{
+  // GitHub Codespaces / VS Code Dev Container for arm64-boot-chain-qemu.
+  // Pins the OS to Ubuntu 24.04 (the version boot-chain.sh was tested on)
+  // and installs every build tool once, when the Codespace is first created.
+  "name": "arm64-boot-chain-qemu (Ubuntu 24.04)",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+
+  // Ask for a 4-core machine: the kernel/TF-A/U-Boot builds use every core.
+  // Codespaces offers a bigger machine type if your plan allows it.
+  "hostRequirements": {
+    "cpus": 4,
+    "storage": "32gb"
+  },
+
+  // Runs once after the container is created: installs QEMU, the aarch64
+  // cross compiler, gdb-multiarch and the rest (see "deps" in the README).
+  "postCreateCommand": "chmod +x boot-chain.sh && ./boot-chain.sh deps",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}

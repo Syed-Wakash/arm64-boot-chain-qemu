@@ -358,6 +358,25 @@ chmod +x boot-chain.sh          # if not already executable
 # terminal 2: paste the gdb-multiarch command it printed
 ```
 
+### Running in GitHub Codespaces
+
+The repo includes `.devcontainer/devcontainer.json`, so a Codespace opens
+already set up:
+
+- **OS pinned to Ubuntu 24.04**, the version the script was tested on.
+- **`deps` runs automatically** when the Codespace is first created (watch
+  the "Creation log" — it takes a few minutes). Skip step 1 above.
+- **4 cores / 32 GB disk requested**, so the build doesn't crawl.
+
+On GitHub: **Code → Codespaces → Create codespace on main**, wait for the
+creation log to finish, then start from step 2 (`fetch`). For `debug`, use
+VS Code's split-terminal button: QEMU in one terminal, GDB in the other.
+Your `~/chain` build survives stopping and restarting the Codespace, but
+**not** a "Rebuild Container" — that resets everything outside `/workspaces`.
+To keep builds across rebuilds, use `WORK=/workspaces/chain ./boot-chain.sh ...`
+every time. Stop the Codespace when you're done so it doesn't use up your
+free hours.
+
 Doing the stages in order is deliberate: each one adds exactly one new piece,
 so if something breaks you know which piece caused it.
 
